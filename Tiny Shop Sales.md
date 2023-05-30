@@ -110,7 +110,7 @@
 
 ---
 
-**Query #1**
+**Query #1** Which product has the highest price?
 
     SELECT product_name
     FROM products
@@ -122,7 +122,7 @@
 | Product M    |
 
 ---
-**Query #2**
+**Query #2** Which customer has made the most orders?
 
     SELECT first_name, last_name, count(order_id) AS orders
     FROM customers AS c
@@ -141,7 +141,7 @@
 | Sophia     | Thomas    | 1      |
 
 ---
-**Query #3**
+**Query #3** What’s the total revenue per product?
 
     SELECT product_name, SUM(price * quantity) AS Revenue
     FROM products AS p
@@ -167,7 +167,7 @@
 | Product M    | 420.00  |
 
 ---
-**Query #4**
+**Query #4** Find the day with the highest revenue.
 
     SELECT to_char(order_date,'day') AS day,
     SUM(price*quantity) AS Revenue
@@ -185,7 +185,7 @@
 | tuesday   | 555.00  |
 
 ---
-**Query #5**
+**Query #5** Find the first order (by date) for each customer.
 
     SELECT customer_id, FIRST_VALUE(order_date) OVER (PARTITION BY customer_id ORDER BY order_date)
     FROM orders
@@ -211,7 +211,7 @@
 | 13          | 2023-05-16T00:00:00.000Z |
 
 ---
-**Query #6**
+**Query #6** Find the top 3 customers who have ordered the most distinct products
 
     SELECT first_name, last_name, COUNT(DISTINCT(product_id)) AS distinct_products
     FROM orders AS o
@@ -230,7 +230,7 @@
 | John       | Doe       | 3                 |
 
 ---
-**Query #7**
+**Query #7** Which product has been bought the least in terms of quantity?
 
     SELECT DISTINCT(product_name), quantity
     FROM products AS p
@@ -253,7 +253,7 @@
 | Product L    | 1        |
 
 ---
-**Query #8**
+**Query #8** What is the median order total?
 
     SELECT percentile_disc(0.5)WITHIN GROUP (ORDER BY order_id)
     FROM orders;
@@ -262,8 +262,8 @@
 | --------------- |
 | 8               |
 
----
-**Query #9**
+--- 
+**Query #9** For each order, determine if it was ‘Expensive’ (total over 300), ‘Affordable’ (total over 100), or ‘Cheap’.
 
     WITH pricelist AS(SELECT order_id, quantity, price
     FROM products AS p
@@ -300,7 +300,7 @@
 | 16       | 340.00 | Expensive       |
 
 ---
-**Query #10**
+**Query #10** Find customers who have ordered the product with the highest price.
 
     WITH customerslist AS(SELECT first_name, last_name, order_id
     FROM customers AS c
@@ -325,5 +325,6 @@
 | Sophia     | Thomas    | 13         | 70.00 |
 
 ---
+Some insights from the analysis:
 
 [View on DB Fiddle](https://www.db-fiddle.com/f/5NT4w4rBa1cvFayg2CxUjr/68)
